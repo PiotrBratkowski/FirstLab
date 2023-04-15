@@ -9,13 +9,11 @@ trigger:
 stages:
 - stage: A
   jobs:
-  - job: 'Test'
+  - job: 'Test_A'
     pool:
       vmImage: 'ubuntu-latest' # other options: 'macOS-latest', 'windows-latest'
     strategy:
       matrix:
-        Python38:
-          python.version: '3.8'
         Python39:
           python.version: '3.9'
         Python310:
@@ -39,7 +37,7 @@ stages:
 
 - stage: B
   jobs:
-  - job: 'Test'
+  - job: 'Test_B'
     pool:
       vmImage: 'ubuntu-latest' # other options: 'macOS-latest', 'windows-latest'
 
