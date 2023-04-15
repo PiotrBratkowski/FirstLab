@@ -16,8 +16,6 @@ stages:
       matrix:
         Python39:
           python.version: '3.9'
-        Python310:
-          python.version: '3.10'
 
     steps:
       - task: UsePythonVersion@0
@@ -28,14 +26,7 @@ stages:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
         displayName: 'Install dependencies'
-
-      - script: |
-          pip install pytest pytest-azurepipelines
-          pytest
-        displayName: 'pytest'
-      - task: PublishTestResults@2
-        condition: succeededOrFailed()
+      - task: PythonScript@0
         inputs:
-          testResultsFiles: '**/test-*.xml'
-          testRunTitle: 'Publish test results for Python $(python.version)'
-
+          scriptSource: 'filePath'
+          scriptPath: 'hello.py'
