@@ -24,7 +24,6 @@ stages:
         inputs:
           versionSpec: '$(python.version)'
         displayName: 'Use Python $(python.version)'
-
       - script: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
@@ -34,25 +33,9 @@ stages:
           pip install pytest pytest-azurepipelines
           pytest
         displayName: 'pytest'
-
-- stage: B
-  jobs:
-  - job: 'Test_BB'
-    pool:
-      vmImage: 'ubuntu-latest' # other options: 'macOS-latest', 'windows-latest'
-
-    steps:
-      - task: UsePythonVersion@0
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
         inputs:
-          versionSpec: '3.8'
-        displayName: 'Use Python $(python.version)'
+          testResultsFiles: '**/test-*.xml'
+          testRunTitle: 'Publish test results for Python $(python.version)'
 
-      - script: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-        displayName: 'Install dependencies'
-
-      - script: |
-          pip install pytest pytest-azurepipelines
-          pytest
-        displayName: 'pytest'
