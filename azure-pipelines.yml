@@ -22,9 +22,10 @@ stages:
     steps:
       - checkout: self
         fetchDepth: 0
-      - task: SonarQubePrepare@5
+      - task: SonarCloudPrepare@1
         inputs:
-          SonarQube: 'SONAR'
+          SonarCloud: 'SOnarCloud'
+          organization: 'piotrekbratkowski'
           scannerMode: 'CLI'
           configMode: 'manual'
           cliProjectKey: 'piotrekbratkowski_PBR_Novo_Project'
@@ -42,4 +43,4 @@ stages:
         inputs:
           scriptSource: 'filePath'
           scriptPath: 'hello.py'
-      - task: SonarQubeAnalyze@5
+      - task: SonarCloudAnalyze@1
